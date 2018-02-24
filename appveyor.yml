@@ -9,7 +9,7 @@ configuration: Release
 before_build:
   - cmake -G "Visual Studio 14 2015 Win64"
 build:
-  project: build/11a_Texture_LinearLayout.sln
+  project: 11a_Texture_LinearLayout\11a_Texture_LinearLayout.sln
   parallel: true
   verbosity: minimal
 notifications:
