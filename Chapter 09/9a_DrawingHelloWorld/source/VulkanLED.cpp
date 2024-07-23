@@ -31,6 +31,17 @@ VulkanLayerAndExtension::VulkanLayerAndExtension()
 	dbgCreateDebugReportCallback	= NULL;
 	dbgDestroyDebugReportCallback	= NULL;
 	debugReportCallback = NULL;
+
+	// Define the debug report control structure, provide the reference of 'debugFunction'
+	// , this function prints the debug information on the console.
+	dbgReportCreateInfo.sType = VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
+	dbgReportCreateInfo.pfnCallback = debugFunction;
+	dbgReportCreateInfo.pUserData = NULL;
+	dbgReportCreateInfo.pNext = NULL;
+	dbgReportCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT |
+		VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT |
+		VK_DEBUG_REPORT_ERROR_BIT_EXT |
+		VK_DEBUG_REPORT_DEBUG_BIT_EXT;
 }
 
 VulkanLayerAndExtension::~VulkanLayerAndExtension()
@@ -245,17 +256,6 @@ VkResult VulkanLayerAndExtension::createDebugReportCallback()
 		return VK_ERROR_INITIALIZATION_FAILED;
 	}
 	std::cout << "GetInstanceProcAddr loaded dbgDestroyDebugReportCallback function\n";
-
-	// Define the debug report control structure, provide the reference of 'debugFunction'
-	// , this function prints the debug information on the console.
-	dbgReportCreateInfo.sType		= VK_STRUCTURE_TYPE_DEBUG_REPORT_CREATE_INFO_EXT;
-	dbgReportCreateInfo.pfnCallback = debugFunction;
-	dbgReportCreateInfo.pUserData	= NULL;
-	dbgReportCreateInfo.pNext		= NULL;
-	dbgReportCreateInfo.flags		= VK_DEBUG_REPORT_WARNING_BIT_EXT |
-									  VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT |
-									  VK_DEBUG_REPORT_ERROR_BIT_EXT |
-									  VK_DEBUG_REPORT_DEBUG_BIT_EXT;
 
 	// Create the debug report callback and store the handle into 'debugReportCallback'
 	result = dbgCreateDebugReportCallback(*instance, &dbgReportCreateInfo, NULL, &debugReportCallback);

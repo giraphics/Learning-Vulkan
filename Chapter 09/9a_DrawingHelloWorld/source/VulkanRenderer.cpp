@@ -364,19 +364,19 @@ void VulkanRenderer::createDepthImage()
 		imgViewInfo.subresourceRange.aspectMask |= VK_IMAGE_ASPECT_STENCIL_BIT;
 	}
 
-	// Use command buffer to create the depth image. This includes -
-	// Command buffer allocation, recording with begin/end scope and submission.
-	CommandBufferMgr::allocCommandBuffer(&deviceObj->device, cmdPool, &cmdDepthImage);
-	CommandBufferMgr::beginCommandBuffer(cmdDepthImage);
-	{
-		// Set the image layout to depth stencil optimal
-		setImageLayout(Depth.image,
-			imgViewInfo.subresourceRange.aspectMask,
-			VK_IMAGE_LAYOUT_UNDEFINED,
-			VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, (VkAccessFlagBits)0, cmdDepthImage);
-	}
-	CommandBufferMgr::endCommandBuffer(cmdDepthImage);
-	CommandBufferMgr::submitCommandBuffer(deviceObj->queue, &cmdDepthImage);
+	//// Use command buffer to create the depth image. This includes -
+	//// Command buffer allocation, recording with begin/end scope and submission.
+	//CommandBufferMgr::allocCommandBuffer(&deviceObj->device, cmdPool, &cmdDepthImage);
+	//CommandBufferMgr::beginCommandBuffer(cmdDepthImage);
+	//{
+	//	// Set the image layout to depth stencil optimal
+	//	setImageLayout(Depth.image,
+	//		imgViewInfo.subresourceRange.aspectMask,
+	//		VK_IMAGE_LAYOUT_UNDEFINED,
+	//		VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL, (VkAccessFlagBits)0, cmdDepthImage);
+	//}
+	//CommandBufferMgr::endCommandBuffer(cmdDepthImage);
+	//CommandBufferMgr::submitCommandBuffer(deviceObj->queue, &cmdDepthImage);
 
 	// Create the image view and allow the application to use the images.
 	imgViewInfo.image = Depth.image;

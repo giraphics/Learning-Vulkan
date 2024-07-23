@@ -62,7 +62,17 @@ VkResult VulkanDevice::createDevice(std::vector<const char *>& layers, std::vect
 	deviceInfo.ppEnabledLayerNames		= NULL;											// Device layers are deprecated
 	deviceInfo.enabledExtensionCount	= (uint32_t)extensions.size();
 	deviceInfo.ppEnabledExtensionNames	= extensions.size() ? extensions.data() : NULL;
-	deviceInfo.pEnabledFeatures			= NULL;
+
+	VkPhysicalDeviceFeatures supportedFeatures;
+	vkGetPhysicalDeviceFeatures(*gpu, &supportedFeatures);
+	if (supportedFeatures.depthClamp) {
+		VkPhysicalDeviceFeatures features = {};
+		features.depthClamp = VK_TRUE;
+		deviceInfo.pEnabledFeatures = &features;
+	}
+	else {
+		deviceInfo.pEnabledFeatures = NULL;
+	}
 
 	result = vkCreateDevice(*gpu, &deviceInfo, NULL, &device);
 	assert(result == VK_SUCCESS);
